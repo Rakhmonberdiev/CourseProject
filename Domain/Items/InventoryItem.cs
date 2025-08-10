@@ -16,7 +16,6 @@ namespace Domain.Items
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Optimistic concurrency (PostgreSQL xmin)
         public uint Xmin { get; private set; }
 
         public ICollection<ItemFieldValue> FieldValues { get; set; } = new List<ItemFieldValue>();
