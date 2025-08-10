@@ -1,4 +1,7 @@
-﻿using Domain.Users;
+﻿using Application.Abstractions.Auth;
+using Domain.Users;
+using Infrastructure.Extensions;
+using Infrastructure.Services.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,16 +15,9 @@ namespace Infrastructure
         {
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(conf.GetConnectionString("PostgresConnection")));
 
-            services.AddIdentityCore<AppUser>(opt =>
-            {
-                opt.User.RequireUniqueEmail = true;
-                opt.Password.RequiredLength = 6;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-                opt.Password.RequireDigit = false;
-            }).AddRoles<IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<AppDbContext>();
-     
+            services.AddIdentityServices();
+
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }
