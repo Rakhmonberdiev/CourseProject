@@ -21,7 +21,8 @@ namespace Infrastructure.Extensions
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequiredLength = 1;
                 opt.Password.RequireNonAlphanumeric = false;
-            }).AddEntityFrameworkStores<AppDbContext>()
+            }).AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<AppDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
 

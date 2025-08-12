@@ -10,7 +10,7 @@ namespace Infrastructure.Services.Auth
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager) : IAuthService
     {
-        public async Task<Result<AuthResponse>> LoginAsync(LoginRequest request, CancellationToken ct = default)
+        public async Task<Result<AuthResponse>> LoginAsync(LoginRequest request)
         {
             var user = await userManager.FindByEmailAsync(request.Email);
             if (user is null)
@@ -26,19 +26,19 @@ namespace Infrastructure.Services.Auth
             return Result<AuthResponse>.Ok(new AuthResponse(user.UserName!, roles.ToArray()));
         }
 
-        public async Task<Result> LogoutAsync(CancellationToken ct = default)
+        public async Task<Result> LogoutAsync()
         {
             await signInManager.SignOutAsync();
             return Result.Ok("Signed out");
         }
 
-        public async Task<Result<AuthResponse>> RegisterAsync(RegisterRequest request, CancellationToken ct = default)
+        public async Task<Result<AuthResponse>> RegisterAsync(RegisterRequest request)
         {
             var user = new AppUser
             {
                 Id = Guid.NewGuid(),
                 Email = request.Email,
-                UserName = request.DisplayName ?? request.Email,
+                UserName = request.userName
             };
             var res = await userManager.CreateAsync(user, request.Password);
             if (!res.Succeeded)

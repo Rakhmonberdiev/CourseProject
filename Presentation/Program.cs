@@ -1,4 +1,5 @@
 using Infrastructure;
+using Presentation.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwaggerUI(opt =>
+    {
+        opt.SwaggerEndpoint("/openapi/v1.json", "Open API v1");
+    });
 }
 
 var summaries = new[]
@@ -31,8 +36,8 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
-
+.WithName("GetWeatherForecast").RequireAuthorization();
+app.MapEndpoints();
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

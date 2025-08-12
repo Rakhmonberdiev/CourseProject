@@ -6,7 +6,6 @@ namespace Domain.Users
 {
     public sealed class AppUser : IdentityUser<Guid>
     {
-        public string? DisplayName { get; set; }
         public string? AvatarUrl { get; set; }
         public bool IsBlocked { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
