@@ -1,8 +1,7 @@
-﻿
-
-using Domain.Users;
+﻿using Domain.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
@@ -33,6 +32,16 @@ namespace Infrastructure.Extensions
                     opt.SlidingExpiration = true;
                     opt.Events = new CookieAuthenticationEvents
                     {
+                        OnRedirectToLogin = ctx =>
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            return Task.CompletedTask;
+                        },
+                        OnRedirectToAccessDenied = ctx =>
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+                            return Task.CompletedTask;
+                        },
                         OnValidatePrincipal = async ctx =>
                         {
                             var userId = ctx.Principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;

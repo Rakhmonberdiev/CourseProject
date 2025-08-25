@@ -7,7 +7,8 @@
             var group = app.MapGroup("api/auth").WithTags("Auth");
             group.MapLoginEndpoint()
                 .MapRegister()
-                .MapLogout();
+                .MapLogout()
+                .MapUserInfo();
             return app;
         }
     }

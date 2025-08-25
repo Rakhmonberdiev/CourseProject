@@ -3,6 +3,7 @@ using Application.Common;
 using Application.Models.Auth;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Infrastructure.Services.Auth
 {
@@ -49,6 +50,15 @@ namespace Infrastructure.Services.Auth
             var roles = await userManager.GetRolesAsync(user);
 
             return Result<AuthResponse>.Ok(new AuthResponse(user.UserName!, roles.ToArray()));
+        }
+
+        public Task<Result<AuthResponse>> UserInfo(ClaimsPrincipal claims)
+        {
+            var username = claims.FindFirst(ClaimTypes.Name)?.Value;
+            if (username is null)
+                return Task.FromResult(Result<AuthResponse>.Fail());
+            var roles = claims.FindAll(ClaimTypes.Role).Select(r => r.Value).ToArray();
+            return Task.FromResult(Result<AuthResponse>.Ok(new AuthResponse(username,roles)));
         }
     }
 }

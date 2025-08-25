@@ -1,8 +1,8 @@
 ﻿using Application.Abstractions.Auth;
-using Domain.Users;
+using Application.Abstractions.Inventory;
 using Infrastructure.Extensions;
 using Infrastructure.Services.Auth;
-using Microsoft.AspNetCore.Identity;
+using Infrastructure.Services.Inventory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +19,7 @@ namespace Infrastructure
 
             services.AddScoped<IAuthService, AuthService>();
 
+            services.AddScoped<IInventoryRepository, InventoryRepository>();
             return services;
         }
     }
