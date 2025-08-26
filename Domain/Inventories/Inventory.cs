@@ -1,6 +1,7 @@
 ﻿using Domain.Items;
 using Domain.Tags;
 using Domain.Users;
+using NpgsqlTypes;
 
 namespace Domain.Inventories
 {
@@ -23,5 +24,9 @@ namespace Domain.Inventories
         public ICollection<InventoryItem> Items { get; set; } = new List<InventoryItem>();
         public ICollection<DiscussionPost> DiscussionPosts { get; set; } = new List<DiscussionPost>();
         public ICollection<InventoryTag> Tags { get; set; } = new List<InventoryTag>();
+
+
+        public NpgsqlTsVector SearchVector { get; set; }
+
     }
 }

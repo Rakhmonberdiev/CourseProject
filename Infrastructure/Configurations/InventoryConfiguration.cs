@@ -46,6 +46,10 @@ namespace Infrastructure.Configurations
                 .WithOne(dp => dp.Inventory)
                 .HasForeignKey(dp => dp.InventoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasGeneratedTsVectorColumn(x=>x.SearchVector,"english", x=> new {x.Title, x.DescriptionMarkdown, x.Category })
+                .HasIndex(x => x.SearchVector)
+                .HasMethod("GIN");
         }
     }
 }
