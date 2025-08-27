@@ -5,7 +5,9 @@
         public static IEndpointRouteBuilder MapInventory(this  IEndpointRouteBuilder app)
         {
             var group = app.MapGroup("api/inventories").WithTags("Inventories");
-            group.MapGetAllInventoriesEndpoint();
+            group
+                .MapGetAllInventoriesEndpoint()
+                .MapGetInventoryByIdEndpoint();
             return app;
         }
     }
