@@ -1,11 +1,13 @@
 ﻿using Application.Abstractions.Auth;
 using Application.Abstractions.Inventory;
 using Infrastructure.Extensions;
+using Infrastructure.Seed;
 using Infrastructure.Services.Auth;
 using Infrastructure.Services.Inventory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure
 {
@@ -20,6 +22,7 @@ namespace Infrastructure
             services.AddScoped<IAuthService, AuthService>();
 
             services.AddScoped<IInventoryRepository, InventoryRepository>();
+
             return services;
         }
     }

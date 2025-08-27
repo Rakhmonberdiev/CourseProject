@@ -30,6 +30,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAngular");
-
+await app.UseMigrationsAndSeedAsync();
 app.MapEndpoints();
 app.Run();
