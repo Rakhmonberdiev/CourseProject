@@ -7,7 +7,8 @@
             var group = app.MapGroup("api/inventories").WithTags("Inventories");
             group
                 .MapGetAllInventoriesEndpoint()
-                .MapGetInventoryByIdEndpoint();
+                .MapGetInventoryByIdEndpoint()
+                .MapGetInventoryItemsEndpoint();
             return app;
         }
     }

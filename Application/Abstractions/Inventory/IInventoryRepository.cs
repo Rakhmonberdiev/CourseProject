@@ -7,5 +7,6 @@ namespace Application.Abstractions.Inventory
     {
         Task<Result<PagedResult<InventoryDto>>> GetAllInventories(InventoryQuery query);
         Task<Result<InventoryDetailsDto>> GetInventoryById(Guid id);
+        Task<Result<PagedResult<InventoryItemDto>>> GetItemByInvId(Guid invId, InventoryItemsQuery query);
     }
 }
