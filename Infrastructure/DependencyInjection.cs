@@ -1,8 +1,10 @@
 ﻿using Application.Abstractions.Auth;
+using Application.Abstractions.Discussion;
 using Application.Abstractions.Inventory;
 using Infrastructure.Extensions;
 using Infrastructure.Seed;
 using Infrastructure.Services.Auth;
+using Infrastructure.Services.Discussion;
 using Infrastructure.Services.Inventory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,7 @@ namespace Infrastructure
 
             services.AddScoped<IInventoryRepository, InventoryRepository>();
 
+            services.AddScoped<IDiscussionRepository, DiscussionRepository>();
             return services;
         }
     }
