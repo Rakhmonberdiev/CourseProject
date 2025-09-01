@@ -9,6 +9,7 @@
         DateTime CreatedAt,
         int ItemsCount,
         int LikesCount,
+        bool HasAccess,
         IReadOnlyList<string> Tags,
         IReadOnlyList<InventoryFieldDto> Fields
     );

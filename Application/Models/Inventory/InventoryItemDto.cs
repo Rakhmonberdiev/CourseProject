@@ -13,7 +13,7 @@ namespace Application.Models.Inventory
     public sealed record ItemFieldValueDto(
         Guid FieldId,
         string FieldTitle,
-        string Type,        
+        int Type,        
         string? StringValue,
         decimal? NumericValue,
         bool? BoolValue
