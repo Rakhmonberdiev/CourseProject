@@ -1,11 +1,14 @@
 using Infrastructure;
 using Presentation.Endpoints;
+using Presentation.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
@@ -32,4 +35,5 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAngular");
 await app.UseMigrationsAndSeedAsync();
 app.MapEndpoints();
+app.MapHub<DiscussionHub>("/hubs/discussion");
 app.Run();

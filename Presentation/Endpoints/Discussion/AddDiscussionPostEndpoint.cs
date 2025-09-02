@@ -1,5 +1,7 @@
 ﻿using Application.Abstractions.Discussion;
 using Application.Models.Discussion;
+using Microsoft.AspNetCore.SignalR;
+using Presentation.Hubs;
 using System.Security.Claims;
 
 namespace Presentation.Endpoints.Discussion
@@ -11,7 +13,8 @@ namespace Presentation.Endpoints.Discussion
             builder.MapPost("{invId:guid}", async (Guid invId,
             CreateDiscussionPostRequest request,
             ClaimsPrincipal user,
-            IDiscussionRepository repo) =>
+            IDiscussionRepository repo,
+            IHubContext<DiscussionHub> hubContext) =>
             {
                 Guid userId;
                 var sub = user.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -20,7 +23,8 @@ namespace Presentation.Endpoints.Discussion
                 var result = await repo.AddInventoryPostAsync(invId, userId, request.Markdown);
 
                 if (!result.Succeeded) return Results.BadRequest(new { errors = result.Errors });
-                return Results.Ok(result.Value);
+                await hubContext.Clients.Group(invId.ToString()).SendAsync("ReceivePost", result.Value);
+                return Results.Ok();
             }).RequireAuthorization();
 
             return builder;
