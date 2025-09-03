@@ -39,14 +39,14 @@ namespace Infrastructure.Services.Auth
             {
                 Id = Guid.NewGuid(),
                 Email = request.Email,
-                UserName = request.userName
+                UserName = request.userName,
             };
             var res = await userManager.CreateAsync(user, request.Password);
             if (!res.Succeeded)
                 return Result<AuthResponse>.Fail(res.Errors.Select(e => e.Description).ToArray());
 
             await signInManager.SignInAsync(user, isPersistent: true);
-
+            await userManager.AddToRoleAsync(user, "user");
             var roles = await userManager.GetRolesAsync(user);
 
             return Result<AuthResponse>.Ok(new AuthResponse(user.UserName!, roles.ToArray()));
