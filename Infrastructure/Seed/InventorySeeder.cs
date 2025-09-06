@@ -12,8 +12,8 @@ namespace Infrastructure.Seed
         {
             if (db.Inventories.Any()) return;
 
-            var testUserId = await db.Users.Where(x => x.Email == "j.m.raxmonberdiyev@gmail.com").Select(x => x.Id).FirstAsync();
-            var testUserId2 = await db.Users.Where(x => x.Email == "rakh@gmail.com").Select(x => x.Id).FirstAsync();
+            var testUserId = await db.Users.Where(x => x.Email == "admin@gmail.com").Select(x => x.Id).FirstAsync();
+            var testUserId2 = await db.Users.Where(x => x.Email == "test@gmail.com").Select(x => x.Id).FirstAsync();
 
             if(testUserId == Guid.Empty || testUserId2 == Guid.Empty)
                 throw new InvalidOperationException("Test users not found. Please run UserSeeder first.");

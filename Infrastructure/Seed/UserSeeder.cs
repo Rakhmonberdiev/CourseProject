@@ -10,8 +10,8 @@ namespace Infrastructure.Seed
         {
             await EnsureRoleAsync("admin");
             await EnsureRoleAsync("user");
-            await EnsureUserAsync(email: "j.m.raxmonberdiyev@gmail.com", userName: "rakh",password: "1",role:"admin");
-            await EnsureUserAsync(email: "rakh@gmail.com", userName: "Jamoliddin", password: "1",role:"user");
+            await EnsureUserAsync(email: "admin@gmail.com", userName: "Admin",password: "1",role:"admin");
+            await EnsureUserAsync(email: "test@gmail.com", userName: "Test", password: "1",role:"user");
 
         }
 

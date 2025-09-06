@@ -36,4 +36,6 @@ app.UseCors("AllowAngular");
 await app.UseMigrationsAndSeedAsync();
 app.MapEndpoints();
 app.MapHub<DiscussionHub>("/hubs/discussion");
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 app.Run();
