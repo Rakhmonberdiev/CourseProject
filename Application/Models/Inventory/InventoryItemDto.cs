@@ -1,4 +1,6 @@
 ﻿
+using Domain.Common;
+
 namespace Application.Models.Inventory
 {
     public sealed record InventoryItemDto(
@@ -7,13 +9,14 @@ namespace Application.Models.Inventory
         string CreatedByName,
         DateTime CreatedAt,
         int LikesCount,
+        bool UserLike,
         IReadOnlyList<ItemFieldValueDto> Fields
     );
 
     public sealed record ItemFieldValueDto(
         Guid FieldId,
         string FieldTitle,
-        int Type,        
+        FieldType Type,        
         string? StringValue,
         decimal? NumericValue,
         bool? BoolValue

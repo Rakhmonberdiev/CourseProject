@@ -73,45 +73,6 @@ namespace Infrastructure.Services.Inventory
             return Result<InventoryDetailsDto>.Ok(dto);
         }
 
-        public async Task<Result<PagedResult<InventoryItemDto>>> GetItemByInvId(Guid invId, InventoryItemsQuery query)
-        {
-            var baseQuery = db.InventoryItems
-            .AsNoTracking()
-            .Where(it => it.InventoryId == invId);
 
-
-            baseQuery = query.Sort switch
-            {
-                InventoryItemsSort.CreatedAsc => baseQuery.OrderBy(it => it.CreatedAt),
-
-                InventoryItemsSort.Popular => baseQuery.OrderByDescending(it => it.Likes.Count).ThenByDescending(it => it.CreatedAt),
-
-                _  => baseQuery.OrderByDescending(it => it.CreatedAt)
-            };
-            var total = await baseQuery.CountAsync();
-
-            var items = await baseQuery
-                .Skip((query.Page - 1) * query.PageSize)
-                .Take(query.PageSize)
-                .Select(i => new InventoryItemDto(
-                    i.Id,
-                    i.CustomId,
-                    i.CreatedBy.UserName ?? "",
-                    i.CreatedAt,
-                    i.Likes.Count,
-                    i.FieldValues
-                        .Select(fv => new ItemFieldValueDto(
-                            fv.FieldId,
-                            fv.Field.Title,
-                            (int)fv.Type,
-                            fv.StringValue,
-                            fv.NumericValue,
-                            fv.BoolValue))
-                        .ToList()
-                    )).ToListAsync();
-
-            var paged = new PagedResult<InventoryItemDto>(items, total, query.Page, query.PageSize);
-            return Result<PagedResult<InventoryItemDto>>.Ok(paged);
-        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Application.Models.Item
+﻿using Application.Models.Inventory;
+
+namespace Application.Models.Item
 {
     public sealed record CreateInventoryItemRequest(
         Guid InventoryId,
